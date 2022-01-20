@@ -14,11 +14,24 @@ class Course extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'status'];
+    protected $withCount = ['students', 'reviews'];
 
     //Estados que puede tener un curso
     const BORRADOR = 1;
     const REVISION = 2;
     const PUBLICADO = 3;
+
+    /**
+     * Este atributo obtiene el promedio de calificaciones
+     * que un usuario le da a un curso.
+     */
+    public function getRatingAttribute()
+    {
+        return $this->reviews_count
+                                    ? round($this->reviews->avg('rating'), 1)
+                                    : 5;
+
+    }
 
     /**
      * Obtiene el instructor que dicta el curso.
@@ -28,7 +41,7 @@ class Course extends Model
      */
     public function teacher()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -38,7 +51,7 @@ class Course extends Model
      */
     public function students()
     {
-        return $this->belongsToMany(User::class, 'user_id');
+        return $this->belongsToMany(User::class);
     }
 
     /**
