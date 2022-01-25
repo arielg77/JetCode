@@ -33,6 +33,11 @@ class Course extends Model
 
     }
 
+    public function getRouteKeyName()
+    {
+        return "slug";
+    }
+
     /**
      * Obtiene el instructor que dicta el curso.
      *
@@ -41,7 +46,7 @@ class Course extends Model
      */
     public function teacher()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
