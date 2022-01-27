@@ -9,7 +9,7 @@
         [
             'name' => 'Cursos',
             'route' => route('courses.index'),
-            'active' => request()->routeIs('courses.index')
+            'active' => request()->routeIs('courses.*')
         ],
 
     ]
@@ -18,7 +18,7 @@
 <nav x-data="{ open: false }" class="bg-indigo-600 border-none shadow shadow-indigo-500 sticky top-0 w-full z-40">
 
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="container">
         <div class="flex justify-between h-16">
             <div class="flex">
 
