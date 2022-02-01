@@ -1,4 +1,5 @@
 <x-app-layout>
+    {{-- Seccíon cabecera con información del curso --}}
     <section class="bg-indigo-500 py-12 mb-12">
         <div class="container grid grid-cols-1 lg:grid-cols-2 gap-6">
             <figure>
@@ -17,6 +18,7 @@
 
     <div class="container grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="order-2 lg:col-span-2 lg:order-1">
+            {{-- Metas del curso --}}
             <section class="card mb-12">
                 <div class="card-body">
                     <h1 class="font-bold text-2xl mb-2 text-gray-700">Lo que aprenderás</h1>
@@ -31,6 +33,7 @@
                 </div>
             </section>
 
+            {{-- Temario del curso --}}
             <section class="mb-12">
                 <h1 class="font-bold text-3xl mb-2 text-gray-700">Temario</h1>
 
@@ -58,6 +61,7 @@
                 @endforeach
             </section>
 
+            {{-- Requisitos del curso --}}
             <section class="mb-8">
                 <h1 class="font-bold text-3xl text-gray-700">Requisitos</h1>
 
@@ -68,6 +72,7 @@
                 </ul>
             </section>
 
+            {{-- Descripción del curso --}}
             <section>
                 <h1 class="font-bold text-3xl">Descripción</h1>
 
@@ -78,6 +83,7 @@
         </div>
 
         <div class="order-1 lg:order-2">
+            {{-- Info del profesor y botón para matricularse o continuar con el curso --}}
             <section class="card mb-4">
                 <div class="card-body">
                     <div class="flex items-center">
@@ -87,11 +93,22 @@
                             <a class="text-indigo-400 text-sm text-bold" href="">{{'@' . Str::slug($course->teacher->name, '')}}</a>
                         </div>
                     </div>
-                    <a href="" class="btn btn-danger btn-block mt-4">Llevar este curso</a>
+
+                    {{-- El método can toma como 1er. parametro el nombre del método que queremos utilizar de la policy.
+                        Verifica si el usuario esta matriculado al curso a travéz de la policy --}}
+                    @can('enrolled', $course)
+                        <a href="{{route('course.status', $course)}}" class="btn btn-danger btn-block mt-4">Continuar con el curso</a>
+                    @else
+                        <form action="{{route('courses.enrolled', $course)}}" method="POST">
+                            @csrf
+                            <button class="btn btn-danger btn-block mt-4" type="submit">Llevar este curso</button>
+                        </form>
+                    @endcan
                 </div>
 
             </section>
 
+            {{-- Se muestran los cursos similares --}}
             <aside class="hidden lg:block">
                 @foreach ($similares as $similar)
                     <article class="flex mb-6">

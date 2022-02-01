@@ -15,7 +15,7 @@
     ]
 @endphp
 
-<nav x-data="{ open: false }" class="bg-indigo-600 border-none shadow shadow-indigo-500 sticky top-0 w-full z-40">
+<nav x-data="{ open: false }" class="bg-indigo-600 border-none shadow shadow-indigo-500 sticky top-0 w-full z-50">
 
     <!-- Primary Navigation Menu -->
     <div class="container">
