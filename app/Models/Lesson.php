@@ -15,6 +15,17 @@ class Lesson extends Model
     protected $guarded = ['id'];
 
     /**
+     * Indica si el usuario autenticado ha marcado una lección
+     * como culminada.
+     *
+     * @return true|false
+     */
+    public function getCompletedAttribute()
+    {
+        return $this->users->contains(auth()->user()->id);
+    }
+
+    /**
      * Obtiene la sección a la que pertenece la lección.
      *
      * Relación uno a muchos inversa con el modelo Section.
